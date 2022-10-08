@@ -33,7 +33,7 @@ SESSION_COOKIE_SAMESITE = 'None'
 SESSION_TYPE='mongodb'
 SESSION_TIME=30
 PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
-MONGO_URI=<<Add your mongogo db url here>>
+MONGO_URI=<<Add your mongodb url here>>
 ENV = "development"
 DOMAIN='http://127.0.0.1:5000'
 SECRET_KEY=<<Add your secret key  here>>
