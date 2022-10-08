@@ -23,11 +23,35 @@ def login_required(something):
 
 @app.route('/', methods=['GET','POST'])
 def home():
+    if request.method == 'GET':
+        return render_template('home.html')
+    elif request.method == 'POST':
+        return render_template('home.html')
+
+@app.route('/draw', methods=['GET','POST'])
+def home():
     if request.method == 'GET':     
-        if 'logged_in' in session and session["logged_in"]:
-            user = db.users.find_one({'_id': ObjectId(session["logged_in_id"])})
-            bal = user['balance']
-            return render_template('home.html', bal=bal)
+        return render_template('home.html')
+    elif request.method == 'POST':
+        return render_template('home.html')
+
+@app.route('/calculator', methods=['GET','POST'])
+def home():
+    if request.method == 'GET':     
+        return render_template('home.html')
+    elif request.method == 'POST':
+        return render_template('home.html')
+
+@app.route('/tracker', methods=['GET','POST'])
+def home():
+    if request.method == 'GET':     
+        return render_template('home.html')
+    elif request.method == 'POST':
+        return render_template('home.html')
+
+@app.route('/dashboard', methods=['GET','POST'])
+def home():
+    if request.method == 'GET':     
         return render_template('home.html')
     elif request.method == 'POST':
         return render_template('home.html')
