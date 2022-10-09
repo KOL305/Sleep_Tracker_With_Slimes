@@ -45,6 +45,7 @@ def meditation():
 
 @app.route('/tracker', methods=['GET'])
 def tracker():
+    
     return render_template('tracker.html')
 
 @app.route('/dashboard', methods=['GET'])
