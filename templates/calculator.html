@@ -9,7 +9,9 @@
     p {
         margin: 0 0 1em 0;
     }
-
+    table {
+        margin: 0 1rem 0 1rem;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -29,7 +31,7 @@
                   <option value="65+">65 years and older</option>
                 </select>
                 <br>
-                <button onclick="calcWakeTime()">Calculate</button>
+                <button class="btn btn-success" onclick="calcWakeTime()">Calculate</button>
 
     </div>
       <div class="col-3">
@@ -65,6 +67,26 @@
         </div>
       </div>
     </div>
+    <br>
+    <div class = "row">
+        <table>
+            <tr>
+              <th>Company</th>
+              <th>Contact</th>
+              <th>Country</th>
+            </tr>
+            <tr>
+              <td>Alfreds Futterkiste</td>
+              <td>Maria Anders</td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td>Centro comercial Moctezuma</td>
+              <td>Francisco Chang</td>
+              <td>Mexico</td>
+            </tr>
+          </table>
+        </div>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
