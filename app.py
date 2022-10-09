@@ -30,6 +30,10 @@ def home():
 def draw():
     return render_template('draw.html')
 
+@app.route('/info', methods=['GET'])
+def info():
+    return render_template('info.html')
+
 @app.route('/calculator', methods=['GET'])
 def calculator():     
     return render_template('calculator.html')
