@@ -85,28 +85,11 @@ def signup():
         users = db.users
 
         if users.find_one({'username': username}) is None:
-            
+            print("hello")
             if password == cpassword:
-                data = {
-                    "slimeColor": "unselected",
-                    "slimeTop": "plain",
-                    "slimeColorOwned": {
-                        "blue": False,
-                        "green": False,
-                        "orange": False,
-                        "purple": False, 
-                        "red": False,
-                        "yellow": False,
-                    },
-                    "slimeTopOwned": {
-                        "hat": False,
-                    }
-                }
                 newUser = {
                     "username": username,
                     "password_hash": pbkdf2_sha256.hash(password),
-                    "balance": 100,
-                    "data": data,
                 }
                 users.insert_one(newUser)
                 user = users.find_one({'username': username})
