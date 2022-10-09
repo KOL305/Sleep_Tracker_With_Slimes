@@ -45,8 +45,14 @@ def meditation():
 
 @app.route('/tracker', methods=['GET'])
 def tracker():
+    users = db.users
+    user = users.find_one({'_id': ObjectId(session['logged_in_id'])})
+    user['_id'] = str(user['_id'])
+
+    log = user['log']
+    print(log)
     
-    return render_template('tracker.html')
+    return render_template('tracker.html', log=log)
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():  
@@ -91,7 +97,7 @@ def signup():
                 newUser = {
                     "username": username,
                     "password_hash": pbkdf2_sha256.hash(password),
-                    "log": pbkdf2_sha256.hash(password),
+                    "log": [],
                 }
                 users.insert_one(newUser)
                 user = users.find_one({'username': username})
@@ -117,10 +123,19 @@ def logout(uid):
 def log():
     print(request.json)
     print('data', request.data)
+    date=request.get_json()['date']
     sleep_time=request.get_json()['sleep_time']
     wake_time=request.get_json()['wake_time']
     users = db.users
+    user = users.find_one({'_id': ObjectId(session['logged_in_id'])})
 
+    log = user['log']
+    print(log)
+    log.append({"date": date, "sleep_time": sleep_time, "wake_time": wake_time})
+    print(log)
+    users.update_one({'_id': ObjectId(session['logged_in_id'])}, {
+                    '$set': {'log': log}})
+    return jsonify({'error': 0, 'redirect': '/tracker'})
 
 if __name__ == "__main__":
     app.config['SECRET_KEY'] = '123qwi34iWge9era89F1393h3gwJ0q3'

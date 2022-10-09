@@ -16,32 +16,98 @@
             </div>
             <div class="modal-body">
                     <div class="container">
-                        <h4 class="bold">Day</h4>
-                        <input type="text" placeholder="mm-dd-yyyy" name="sleepTime" class="form_box" v-model="sleepTime"required><br>
+                        <h4 class="bold">Date</h4>
+                        <input type="text" placeholder="mm-dd-yyyy" name="date" class="form_box" v-model="date"required><br>
                         <p id="sleepMsg" style="color:red !important;" v-if="sleepError">invalid time (remember it's 24:00 format)</p><br>
                         <h4 class="bold">Estimated Sleep Time</h4>
                         <input type="text" placeholder="hh:mm" name="sleepTime" class="form_box" v-model="sleepTime"required><br>
                         <p id="sleepMsg" style="color:red !important;" v-if="sleepError">invalid time (remember it's 24:00 format)</p><br>
                         <h4 class="bold">Estimated Wake Up Time</h4>
-                        <input type="password" placeholder="hh:mm" name="wakeTime" class="form_box" v-model="wakeTime"required><br>
+                        <input type="text" placeholder="hh:mm" name="wakeTime" class="form_box" v-model="wakeTime"required><br>
                         <p id="wakeMsg" style="color:red !important;" v-if="wakeError">invalid time (remember it's 24:00 format)</p><br>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <input type="button" class="btn btn-success" value="Add Log" @click="submit(s_username,s_password,s_cpassword)"></button>
+                <input type="button" class="btn btn-success" value="Add Log" @click="submit(date,sleepTime,wakeTime)"></button>
             </div>
         </form>
     </div>
 </div>
 
 <div style="text-align:center">
-    <a type="button" class="nav_button mx-2 p-1" data-bs-toggle="modal" data-bs-target="#loggerModal">Add Log</a>
+    <br>
+    <div id="logs" class="container" style="border: 4px solid white;">
+        <div class="row" style="padding-top: 10px; color:white; border: 2px solid white">
+            <div class="col">
+                <h4 class="bold">
+                    Date
+                </h4>
+            </div>
+            <div class="col">
+                <h4 class="bold">
+                    Sleep Time
+                </h4>
+            </div>
+            <div class="col">
+                <h4 class="bold">
+                    Wake-up Time
+                </h4>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#loggerModal">Add Log</a>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript">
+    window.onload = function (){
+        var logs = JSON.parse('{{log|tojson|safe}}');
+        
+        var logDiv = document.getElementById("logs");
+
+        logs.forEach(function(item, index){
+            var row = document.createElement("div");
+            row.classList.add("row");
+            row.style['border'] = "2px solid white";
+            row.style['padding-top'] = "10px";
+
+            var dateCol = document.createElement("div");
+            dateCol.classList.add("col")
+            
+            var date = document.createElement("p");
+            date.style["color"] = "white";
+            date.innerHTML = item['date'];
+
+            var sleepCol = document.createElement("div");
+            sleepCol.classList.add("col")
+
+            var sleep = document.createElement("p");
+            sleep.style["color"] = "white";
+            sleep.innerHTML = item['sleep_time'];
+
+            var wakeCol = document.createElement("div");
+            wakeCol.classList.add("col")
+
+            var wake = document.createElement("p");
+            wake.style["color"] = "white";
+            wake.innerHTML = item['wake_time'];
+
+            dateCol.append(date);
+            sleepCol.append(sleep);
+            wakeCol.append(wake);
+            row.append(dateCol);
+            row.append(sleepCol);
+            row.append(wakeCol);
+            logDiv.append(row);
+        })
+
+        console.log(logs);
+    }
+
     var loggerForm = new Vue({
         el: "#loggerForm",
         delimiters: ["[[", "]]"],
@@ -49,8 +115,9 @@
             return {
                 sleepError: false,
                 wakeError: false,
-                sleepTime: "",
-                wakeTime: "",
+                date: "10-09-2022",
+                sleepTime: "22:00",
+                wakeTime: "10:00",
             };
         },
         methods: {
@@ -59,6 +126,7 @@
             refThis = this
             axios.post("/api/log",
             {
+                date: this.date,
                 sleep_time: this.sleepTime,
                 wake_time: this.wakeTime,
             },
@@ -67,14 +135,6 @@
             refThis.wakeError = false;
             if (response.data.redirect) {
                 window.location.href = response.data.redirect;
-            }
-            else {
-                if (response.data.error == 1) {
-                    refThis.sleepError = true;
-                }
-                else if (response.data.error == 2) {
-                    refThis.wakeError = true;
-                }
             }
             });
         },
