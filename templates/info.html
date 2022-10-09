@@ -1,17 +1,99 @@
 {% extends 'base.html' %} {% block title %}Info{% endblock %}
 
 {% block style %}
-<style type="text/css">
-    body{
-        color: white;
+  <style>
+  body {
+    position: relative;
+    color: white;
+  }
+  ul.nav-pills {
+    top: 20px;
+    position: fixed;
+  }
+  div.col-sm-9 div {
+    height: 250px;
+    font-size: 28px;
+  }
+  #section1 #section2 #section3 #section4 #section5{
+    margin: 1rem;
+  }
+  #section1 {color: #fff; background-color: #1E88E573;}
+  #section2 {color: #fff; background-color: #673ab773;}
+  #section3 {color: #fff; background-color: #ff980073;}
+  #section4 {color: #fff; background-color: #00bcd473;}
+  #section5 {color: #fff; background-color: #00968873;}
+  #section6 {color: #fff; background-color: #e42f2873;}
+  
+    #section1, #section2, #section3, #section4, #section5, #section6  {
+      padding: 20px;
+      margin: 20px 0 20px 0;
     }
-</style>
+  </style>
 {% endblock %}
 
 {% block content %}
-<body>
-<div style="text-align:center">
-    <h1>What are sleep cycles?</h1>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+
+    <div class="container">
+      <div class="row">
+        <!-- <nav class="col-sm-3" id="myScrollspy">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Section 4 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#section41">Section 4-1</a></li>
+                <li><a href="#section42">Section 4-2</a></li>                     
+              </ul>
+            </li>
+          </ul>
+        </nav> -->
+        <div class="col-sm">
+          <div id="section1">    
+            <h1>What are sleep cycles?</h1>
+            <p>Sleep is not uniform. Instead, over the course of the night, your total sleep is made up of several rounds of the sleep cycle, which is composed of four individual stages. In a typical night, a person goes through four to six sleep cycles1. Not all sleep cycles are the same length, but on average they last about 90 minutes each.</p>
+          </div>
+          <div id="section2"> 
+            <h1>Stages of Sleeping</h1>
+            <p>An average sleep cycle lasts about 90 minutes. Ideally, you need four to six cycles of sleep every 24 hours to feel fresh and rested. Each cycle contains four individual stages: three that form non-rapid eye movement (NREM) sleep and one rapid eye movement (REM) sleep. While the time spent in each stage varies the longer you're asleep, and you might bounce between stages each night, each individual stage remains largely the same.</p>
+          </div>        
+          <div id="section3">         
+            <h1>NREM Stage One</h1>
+            <p>This stage of light sleeping lasts five to 10 minutes. During this stage you're "dozing off", as your body and brain activity begins to slow down. If you're woken during this stage, you may feel as if you haven't fallen asleep at all.</p>
+          </div>
+          <div id="section4">         
+            <h1>NREM Stage Two</h1>
+            <p>During this stage of light sleeping, your muscles begin to relax as your body temperature drops and your heart rate and breathing slow down. During this stage, your eye movement stops and your brain waves slow. There are occasional bursts of brain waves called sleep spindles that are believed to assist with storing your memories and shutting down your senses so your sleep won't be interrupted. This stage prepares you to enter into deep sleep and may last up to 25 minutes.</p>
+          </div>   
+          <div id="section6">         
+            <h1>NREM Stage Three</h1>
+            <p>During this stage of light sleeping, your muscles begin to relax as your body temperature drops and your heart rate and breathing slow down. During this stage, your eye movement stops and your brain waves slow. There are occasional bursts of brain waves called sleep spindles that are believed to assist with storing your memories and shutting down your senses so your sleep won't be interrupted. This stage prepares you to enter into deep sleep and may last up to 25 minutes.</p>
+          </div>   
+          <div id="section5">         
+            <h1>REM Sleep</h1>
+            <p>You dream during this stage. Your brain activity greatly increases and can even match or exceed your usual brain activity when you are awake. Your muscles enter a state of temporary paralysis, except for your eyes (which move rapidly during this stage) and the muscles you need to breathe. Your breathing gets faster, and your heart rate and blood pressure increase. Usually, the first period of REM sleep occurs around 90 minutes into your sleep cycle and lasts about 10 minutes. Each of your later REM stages gets longer the more hours you remain asleep.</p>
+          </div>   
+
+        </div>
+      </div>
+    </div>
+    
+    </body>
+    
+<!-- <div style="text-align:center"> -->
+    
+        <!-- <p>- Boosting your immune system.
+            - Strengthening your emotional processing.
+            - Improving your mood and decreasing stress.
+            - Improving memory function.
+            - Improving cellular growth.
+            - Repairing tissue and muscle recovery.
+            - Increasing productivity.
+            - Improving exercise performance.</p>
+      </div> -->
+    <!-- <h1>What are sleep cycles?</h1>
     <br>
     <div class = "row">
         <h2>Benefits of sleeping</h2>
@@ -22,8 +104,8 @@
             - Improving cellular growth.
             - Repairing tissue and muscle recovery.
             - Increasing productivity.
-            - Improving exercise performance.
-        </p>
+            - Improving exercise performance. -->
+        <!-- </p>
     </div>
     <br>
 
@@ -58,12 +140,11 @@
     <br>
 
     <h3>resources</h3>
-</div>
-</body>
+</div> -->
 {% endblock %}
 
 {% block scripts %}
-<style type="text/javascript">
-
-</style>
+<script type="text/javascript">
+    
+</script>
 {% endblock %}

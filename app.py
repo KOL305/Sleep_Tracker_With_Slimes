@@ -51,6 +51,7 @@ def tracker():
 
     log = user['log']
     print(log)
+    
     return render_template('tracker.html', log=log)
 
 @app.route('/dashboard', methods=['GET'])
