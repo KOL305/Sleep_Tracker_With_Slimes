@@ -7,13 +7,73 @@
 {% endblock %}
 
 {% block content %}
+<div class="modal fade" id="loggerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form action="/api/log" method="post" class="modal-content" id="loggerForm">
+            <div class="modal-header">
+                <h5 class="modal-title bold">Create A New Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="container">
+                        <img src="{{ url_for('static', filename='images/objects/person-fill.svg') }}">
+                        <input type="text" placeholder="hh:mm" name="sleepTime" class="form_box" v-model="sleepTime"required><br>
+                        <p id="sUserMsg" style="color:red !important;" v-if="sUserError">invalid time (remember it's 24:00 format)</p><br>
+                        <img src="{{ url_for('static', filename='images/objects/key-fill.svg') }}">
+                        <input type="password" placeholder="hh:mm" name="wakeTime" class="form_box" v-model="wakeTime"required><br>
+                        <p id="sPassMsg" style="color:red !important;" v-if="sPassError">invalid time (remember it's 24:00 format)</p><br>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <input type="button" class="btn btn-success" value="Add Log" @click="submit(s_username,s_password,s_cpassword)"></button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div style="text-align:center">
-    <h1>Work In Progress</h1>
+    <a type="button" class="nav_button mx-2 p-1" data-bs-toggle="modal" data-bs-target="#loggerModal">Add Log</a>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<style type="text/javascript">
-
-</style>
+<script type="text/javascript">
+    var loggerForm = new Vue({
+        el: "#loggerForm",
+        delimiters: ["[[", "]]"],
+        data() {
+            return {
+                sleep_time: "",
+                wake_time: "",
+            };
+        },
+        methods: {
+        submit(sleepTime, wakeTime) {
+            console.log('data', sleepTime, wakeTime);
+            refThis = this
+            axios.post("/api/log",
+            {
+                sleep_time: this.sleepTime,
+                wake_time: this.wakeTime,
+            },
+            {headers:{'Content-Type': 'application/json'}}).then(function (response) {
+            refThis.sUserError = false;
+            refThis.sPassError = false;
+            if (response.data.redirect) {
+                window.location.href = response.data.redirect;
+            }
+            else {
+                if (response.data.error == 1) {
+                    refThis.sUserError = true;
+                }
+                else if (response.data.error == 2) {
+                    refThis.sPassError = true;
+                }
+            }
+            });
+        },
+        },
+    });
+</script>
 {% endblock %}

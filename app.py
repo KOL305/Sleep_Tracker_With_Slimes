@@ -22,7 +22,7 @@ def login_required(something):
     return wrap_login
 
 ### WEBPAGE ROUTES ###
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return render_template('home.html')
 
@@ -132,7 +132,7 @@ def logout(uid):
 def calculate():
     return render_template('home.html')
 
-@app.route('/api/updatelog', methods=['POST'])
+@app.route('/api/log', methods=['POST'])
 def updatelog():
     return render_template('home.html')
 
