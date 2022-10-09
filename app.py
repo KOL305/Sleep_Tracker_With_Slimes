@@ -22,7 +22,7 @@ def login_required(something):
     return wrap_login
 
 ### WEBPAGE ROUTES ###
-@app.route('/', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def home():
     return render_template('home.html')
 
