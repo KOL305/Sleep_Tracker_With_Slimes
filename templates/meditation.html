@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% block title %}Meditation{% endblock %}
+
+{% block style %}
+<style type="text/css">
+    .icon{
+        width: 20%;
+        height: auto;
+    }
+    .center{
+        text-align:center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div>
+    <br><br>
+    <div class="row">
+        <div class="col center">
+            <img src="{{ url_for('static', filename='images/objects/car-front-fill.svg') }}" class="icon"><br>
+            <br>
+            <audio controls>
+                <source src="../static/audio/city-traffic-outdoor.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="col center">
+            <img src="{{ url_for('static', filename='images/objects/fire.svg') }}" class="icon"><br>
+            <br>
+            <audio controls>
+                <source src="../static/audio/lit-fireplace.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="col center">
+            <div class="col">
+                <img src="{{ url_for('static', filename='images/objects/water.svg') }}" class="icon"><br>
+                <br>
+                <audio controls>
+                    <source src="../static/audio/ocean-waves.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+    <div class="row">
+        <div class="col center">
+            <img src="{{ url_for('static', filename='images/objects/cloud-lightning-rain.svg') }}" class="icon"><br>
+            <br>
+            <audio controls>
+                <source src="../static/audio/rain-and-thunder.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="col center">
+            <img src="{{ url_for('static', filename='images/objects/cloud-drizzle.svg') }}" class="icon"><br>
+            <br>
+            <audio controls>
+                <source src="../static/audio/rain.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="col center">
+            <div class="col">
+                <img src="{{ url_for('static', filename='images/objects/wind.svg') }}" class="icon"><br>
+                <br>
+                <audio controls>
+                    <source src="../static/audio/wind.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style type="text/javascript">
+
+</style>
+{% endblock %}

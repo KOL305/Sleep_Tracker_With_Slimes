@@ -1,0 +1,97 @@
+{% extends 'base.html' %} {% block title %}Draw{% endblock %}
+
+{% block style %}
+<style type="text/css">
+    #canvas{
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+        padding-right:0;
+        border: 1px solid black;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div>
+    <br>
+    <canvas id="canvas"></canvas>
+    <br>
+    <div id="options" class="row" style="width:40%; margin: 0 auto;">
+        <div class="col">
+            <input id="color" type="color">
+        </div>
+        <div class="col">
+            <a type="button" id="download" class="btn btn-success" download="drawing.jpg" href="" onclick="download_img(this);">Download</a>
+        </div>
+        <div class="col">
+            <input id="size" type="number" value=1 step=1 max=6 min=1>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    const canvas = document.getElementById("canvas");
+    canvas.height = window.innerHeight/1.5;
+    canvas.width = window.innerWidth/1.5;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    var prevX = null;
+    var prevY = null;
+
+    var draw = false;
+
+
+    colorPicker = document.getElementById("color");
+    colorPicker.addEventListener("input", (e) => ctx.strokeStyle=(document.getElementById("color").value));
+
+    window.addEventListener("mousedown", (e) => draw = true)
+
+    window.addEventListener("mouseup", (e) => draw = false)
+
+    window.addEventListener("mousemove", (e) => {
+        rect = canvas.getBoundingClientRect();
+        if(prevX == null || prevY == null || !draw){
+            prevX = e.clientX - rect.left;
+            prevY = e.clientY - rect.top;
+            return;
+        }
+        else{
+            let currX = e.clientX - rect.left;
+            let currY = e.clientY - rect.top;
+
+            ctx.beginPath();
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(currX, currY);
+            ctx.stroke();
+
+            prevX = currX;
+            prevY = currY;
+        }
+    })
+
+    document.getElementById("size").addEventListener("input", function() {
+        var element = document.getElementById("size");
+        if (element.value>6){
+            element.value = 6;
+        }
+        else if (element.value<1){
+            element.value = 1;
+        }
+        ctx.lineWidth = element.value;
+    });
+    
+    download_img = function(el) {
+        var imageURI = canvas.toDataURL("image/jpg");
+        el.href = imageURI;
+    };
+
+</script>
+{% endblock %}

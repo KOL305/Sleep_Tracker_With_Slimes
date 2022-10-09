@@ -23,7 +23,7 @@
             {% endfor %}
             <div class="modal fade" id="logInModal" tabindex="-1">
                 <div class="modal-dialog">
-                    <form id="loginForm" action="/login" method="post" class="modal-content">
+                    <form id="loginForm" action="/api/login" method="post" class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title bold">Log Back Into Your Account</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -47,7 +47,7 @@
             </div>
             <div class="modal fade" id="signUpModal" tabindex="-1">
                 <div class="modal-dialog">
-                    <form action="/signup" method="post" class="modal-content" id="signupForm">
+                    <form action="/api/signup" method="post" class="modal-content" id="signupForm">
                         <div class="modal-header">
                             <h5 class="modal-title bold">Create A New Account</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -81,26 +81,34 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <a href="logout" class="btn btn-danger">Logout</a>
+                            <a href="/api/logout" class="btn btn-danger">Logout</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--nav bar-->
             <nav style="--bs-breadcrumb-divider: ''; min-height: 75px;"class="navbar nav_container">
                 <div class="container-fluid">
-                    <a href="/" class="logo extrabold">Task Manager With Slimes</a>
-                    {% if session['logged_in'] %}
+                    <a href="/" class="logo extrabold">Sleep Tracker With Slimes</a>
+                    <!-- {% if session['logged_in'] %}
                     <ul class="breadcrumb nav_options">
                         <li class="breadcrumb-item nav_item"><a href="shop" class="nav_link">Shop</a></li>
                         <li class="breadcrumb-item nav_item"><a href="tasks" class="nav_link">Tasks</a></li>
                         <li class="breadcrumb-item nav_item"><a href="dashboard" class="nav_link">Dashboard</a></li>
                     </ul>
-                    {% endif %}
+                    {% endif %} -->
                     <div>
+                        {% if session['logged_in'] %}
+                        <a href="/tracker" type="button" class="nav_button mx-3 p-1">Logger</a>
+                        {% endif %}
+                        
+                        <a href="/draw" type="button" class="nav_button mx-3 p-1">Draw</a>
+                        <a href="/calculator" type="button" class="nav_button mx-3 p-1">Sleep Calculator</a>
+                        <a href="/meditation" type="button" class="nav_button mx-3 p-1">Meditation</a>
                         {% block buttons %}
                         {% if session['logged_in'] %}
                         <a type="button" class="nav_button mx-2 p-1" data-bs-toggle="modal" data-bs-target="#logOutModal">Log Out</a>
-                        {% else %}
+                        {% else %}                        
                         <a type="button" class="nav_button mx-3 p-1" data-bs-toggle="modal" data-bs-target="#logInModal">Login</a>
                         <a type="button" class="nav_button mx-3 p-1" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a>
                         {% endif %}
@@ -120,26 +128,28 @@
                 var url = document.createElement('a');
                 url.href = window.location.href;
                 var page = document.getElementById('webpage');
-                if (url.pathname == '/'){
-                    page.style['background'] = "linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)";
-                    page.style['background-attachment'] = true;
-                }
-                else if (url.pathname == '/tasks'){
-                    page.style['background'] = "linear-gradient(315deg, #F2A65A 100%, #772F1A 90%)";
-                    page.style['background-attachment'] = true;
-                }
-                else if (url.pathname == '/dashboard'){
-                    // page.style['background'] = "linear-gradient(315deg, #D93965 100%, #E3E3E3 100%)";
-                    page.style['background'] = "linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%)";
-                    page.style['background-attachment'] = true;
-                }
-                else if (url.pathname == '/shop'){
-                    page.style['background-image'] = "url('../static/images/background.png')";
-                    page.style['background-size'] = "cover";
-                    page.style['background-position'] = "center";
-                    page.style['background-size'] = "37rem 100%";
-                    page.style['background-repeat'] = "repeat-x";
-                }
+                
+                page.style['background'] = "linear-gradient(#04619F, #000000)";
+                page.style['background-attachment'] = true;
+                // if (url.pathname == '/'){
+                //     page.style['background'] = "linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)";
+                //     page.style['background-attachment'] = true;
+                // }
+                // else if (url.pathname == '/tasks'){
+                //     page.style['background'] = "linear-gradient(315deg, #F2A65A 100%, #772F1A 90%)";
+                //     page.style['background-attachment'] = true;
+                // }
+                // else if (url.pathname == '/dashboard'){
+                //     page.style['background'] = "linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%)";
+                //     page.style['background-attachment'] = true;
+                // }
+                // else if (url.pathname == '/shop'){
+                //     page.style['background-image'] = "url('../static/images/background.png')";
+                //     page.style['background-size'] = "cover";
+                //     page.style['background-position'] = "center";
+                //     page.style['background-size'] = "37rem 100%";
+                //     page.style['background-repeat'] = "repeat-x";
+                // }
             </script>
 
             <script type="text/javascript">
@@ -158,7 +168,7 @@
                     methods: {
                     submit(l_username, l_password) {
                         refThis = this
-                        axios.post("/login",
+                        axios.post("/api/login",
                         {
                             username: this.l_username,
                             password: this.l_password,
@@ -205,7 +215,7 @@
                     submit(s_username, s_password, s_cpassword) {
                         console.log('data', s_username, s_password, s_cpassword);
                         refThis = this
-                        axios.post("/signup",
+                        axios.post("/api/signup",
                         {
                             username: this.s_username,
                             password: this.s_password,

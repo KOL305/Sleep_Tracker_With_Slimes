@@ -1,0 +1,271 @@
+{% extends 'base.html' %} {% block title %}Sleep Calculator{% endblock %}
+{% block style %}
+<style type="text/css">
+    .container{
+        color: white;
+        padding: 3em 0;
+        max-width: 900px;
+    }
+    p {
+        margin: 0 0 1em 0;
+    }
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container sleepcalculator">
+    <div class="row">
+    <div class="col-3">
+        <h4> Your Age </h4>
+            <p class="small">Choose your age range.</p>
+                <select name="age" id="age" class="form-control form-select">
+                  <option value="birth_to_3_months">Birth to 3 months</option>
+                  <option value="4_to_11_months">4 to 11 months</option>
+                  <option value="1_to_2_years">1 to 2 years old</option>
+                  <option value="3_to_5_years">3 to 5 years old</option>
+                  <option value="6_to_12_years">6 to 12 years old</option>
+                  <option value="13_to_18_years">13 to 18 years old</option>
+                  <option value="19_to_64_years">19 to 64 years old</option>
+                  <option value="65+">65 years and older</option>
+                </select>
+                <br>
+                <button onclick="calcWakeTime()">Calculate</button>
+
+    </div>
+      <div class="col-3">
+        <div class="wake-up">
+          <h4>Wake Up Time</h4>
+          <p class="small">Input your wake up time.</p>
+          <input class="form-control" type="text" id="wakeTime" data-format="h:mm" data-template="hh : mm" name="datetime" placeholder="hh:mm" value="13:00">
+        </div>
+      </div>
+      <div class="col-6">
+        <h4>You Should Go To Bed At:</h4>
+        <div class="row">
+          <div class="col-md-12">
+            <h3 id="result0" class="resulttime animated"></h3>
+            <p id = "p1"></p>
+          </div>
+          <div class="col-md-12">
+            <h3 id="result1" class="resulttime"></h3>
+            <p id = "p2"></p>
+          </div>
+          <div class="col-md-12">
+            <h3 id="result2" class="resulttime"></h3>
+            <p id = "p3"></p>
+          </div>
+          <div class="col-md-12">
+            <h3 id="result3" class="resulttime"></h3>
+            <p id = "p4"></p>
+          </div>
+          <div class="col-md-12">
+            <h3 id="result4" class="resulttime"></h3>
+            <p id = "p5"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    
+    function calcWakeTime(){
+        var result0 = document.getElementById("result0");
+        var result1 = document.getElementById("result1");
+        var result2 = document.getElementById("result2");
+        var result3 = document.getElementById("result3");
+        var presult4 = document.getElementById("result4");
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+        var p3 = document.getElementById("p3");
+        var p4 = document.getElementById("p4");
+        var p5 = document.getElementById("p5");
+        
+        result0.innerHTML = "";
+        result1.innerHTML = "";
+        result2.innerHTML = "";
+        result3.innerHTML = "";
+        result4.innerHTML = "";
+
+        p1.innerHTML = "";
+        p2.innerHTML = "";
+        p3.innerHTML = "";
+        p4.innerHTML = "";
+        p5.innerHTML = "";
+
+        var wakeTime = document.getElementById("wakeTime").value;
+        var age = document.getElementById("age").value;
+        var cyclesRec;
+        var total;
+        var totalHour;
+        var totalMin;
+        var sleepcycleMin;
+        var numCycles = 0;
+        var hour = parseInt(wakeTime.substring(0,2),10);
+        console.log(hour)
+        var minutes = parseInt(wakeTime.substring(3),10);
+        console.log(minutes)
+        console.log(wakeTime);
+        console.log(age);
+        if (age == "birth_to_3_months"){
+            sleepcycleMin = parseInt(40,0); //one sleep cycle is 40 minutes, needs 14 - 17 hours of sleep
+            cyclesRec = 21; //14 hours minimum
+            numCycles = 5;
+
+        } else if (age == "4_to_11_months"){
+            sleepcycleMin = parseInt(50,0); //one sleep cycle is 50 minutes, needs 12 - 16 hours of sleep
+            cyclesRec = 15; //12.5 hours minimum
+            numCycles = 5;
+        } else if (age == "1_to_2_years"){
+            sleepcycleMin = parseInt(60,0);
+            cyclesRec = 11;
+            numCycles = 4;
+        } else if (age == "3_to_5_years"){
+            sleepcycleMin = parseInt(80,0);
+            cyclesRec = 8;
+            numCycles = 3;
+        } else if (age == "6_to_12_years"){
+            sleepcycleMin = parseInt(90,0);
+            cyclesRec = 6;
+            numCycles = 3;
+        } else if (age == "13_to_18_years"){
+            sleepcycleMin = parseInt(90,0);
+            cyclesRec = 6;
+            numCycles = 2;
+        } else if (age == "19_to_64_years"){
+            sleepcycleMin = parseInt(90,0);
+            cyclesRec = 5;
+            numCycles = 2;
+        } else if (age == "65+"){
+            sleepcycleMin = parseInt(90,0);
+            cyclesRec = 5;
+            numCycles = 1;
+        }
+        //cycle 1
+        if (numCycles > 0){
+            totalHour = hour - Math.floor(cyclesRec*sleepcycleMin/60);
+            totalMin = minutes - Math.floor(cyclesRec*sleepcycleMin%60);
+            if(totalMin < 0){
+                totalMin += 60;
+                totalHour -= 1;
+            }
+            //add
+            if(totalMin < 0){
+                totalMin = totalMin + 60;
+                totalHour -= 1;
+            }
+            if(totalHour < 0){
+                totalHour += 24;
+            }
+            //end
+            if(totalMin < 10){
+                document.getElementById("result0").innerHTML = totalHour + ":0" + totalMin;
+            } else {
+                document.getElementById("result0").innerHTML = totalHour + ":" + totalMin;
+            }
+            document.getElementById("p1").innerHTML = "This gives you " + Math.round((parseInt(cyclesRec,10)*sleepcycleMin/60)*100)/100 + " hours of sleep and " + cyclesRec + " cycles."
+            numCycles-=1;
+        }
+        // cycles 2
+        if (numCycles > 0){
+            if(totalMin - sleepcycleMin < 0){
+                totalHour -= 1;
+                totalMin = totalMin - sleepcycleMin + 60;
+            } else {
+                totalMin -= sleepcycleMin;
+            }
+            //add
+            if(totalMin < 0){
+                totalMin = totalMin + 60;
+                totalHour -= 1;
+            }
+            if(totalHour < 0){
+                totalHour += 24;
+            }
+            //end
+            if(totalMin < 10){
+                document.getElementById("result1").innerHTML = totalHour + ":0" + totalMin;
+            } else {
+                document.getElementById("result1").innerHTML = totalHour + ":" + totalMin;
+            }
+            document.getElementById("p2").innerHTML = "This gives you " + Math.round((parseInt(cyclesRec+1,10)*sleepcycleMin/60)*100)/100 + " hours of sleep and " + parseInt(cyclesRec+1,10) + " cycles."
+            numCycles-=1;
+        }
+        //cycle 3
+        if (numCycles > 0){
+            cyclesRec += 1;
+            if(totalMin - sleepcycleMin < 0){
+                totalHour -= 1;
+                totalMin = totalMin - sleepcycleMin + 60;
+                console.log(totalMin);
+            } else {
+                totalMin -= sleepcycleMin;
+            }
+            //add
+            if(totalMin < 0){
+                totalMin = totalMin + 60;
+                totalHour -= 1;
+            }
+            if(totalHour < 0){
+                totalHour += 24;
+            }
+            //end
+            if(totalMin < 10){
+                document.getElementById("result2").innerHTML = totalHour + ":0" + totalMin;
+            } else {
+                document.getElementById("result2").innerHTML = totalHour + ":" + totalMin;
+            }
+            document.getElementById("p3").innerHTML = "This gives you " + Math.round((parseInt(cyclesRec+1,10)*sleepcycleMin/60)*100)/100 + " hours of sleep and " + parseInt(cyclesRec+1,10) + " cycles."
+            numCycles-=1;
+        }
+        //cycle 4
+        if (numCycles > 0){
+            cyclesRec += 1;
+            if(totalMin - sleepcycleMin < 0){
+                totalHour -= 1;
+                totalMin = totalMin - sleepcycleMin + 60;
+            } else {
+                totalMin -= sleepcycleMin;
+            }
+            //add
+            if(totalMin < 0){
+                totalMin = totalMin + 60;
+                totalHour -= 1;
+            }
+            if(totalHour < 0){
+                totalHour += 24;
+            }
+            //end
+            if(totalMin < 10){
+                document.getElementById("result3").innerHTML = totalHour + ":0" + totalMin;
+            } else {
+                document.getElementById("result3").innerHTML = totalHour + ":" + totalMin;
+            }
+            document.getElementById("p4").innerHTML = "This gives you " + Math.round((parseInt(cyclesRec+1,10)*sleepcycleMin/60)*100)/100 + " hours of sleep and " + parseInt(cyclesRec+1,10) + " cycles."
+            numCycles-=1;
+        }
+        //cycle 5
+        if (numCycles > 0){
+            cyclesRec += 1;
+            if(totalMin - sleepcycleMin < 0){
+                totalHour -= 1;
+                totalMin = totalMin - sleepcycleMin + 60;
+            } else {
+                totalMin -= sleepcycleMin;
+            }
+            if(totalHour < 0){
+                totalHour += 24;
+            }
+            if(totalMin < 10){
+                document.getElementById("result4").innerHTML = totalHour + ":0" + totalMin;
+            } else {
+                document.getElementById("result4").innerHTML = totalHour + ":" + totalMin;
+            }
+            document.getElementById("p5").innerHTML = "This gives you " + Math.round((parseInt(cyclesRec+1,10)*sleepcycleMin/60)*100)/100 + " hours of sleep and " + parseInt(cyclesRec+1,10) + " cycles."
+            numCycles-=1;
+        }
+    }
+    
+
+</script>
+{% endblock %}
