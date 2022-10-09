@@ -10,7 +10,7 @@ Pre-requisites:
 How to import app:
 - Open up terminal
 - Go to the chosen directory where you want the project located
-- Enter in terminal: git clone https://github.com/KOL305/Sleep_Tracker_With_Slimes
+- Enter in terminal: git clone https://github.com/KOL305/Cloud_Nine
 - Open up your project in a code editor
 
 
