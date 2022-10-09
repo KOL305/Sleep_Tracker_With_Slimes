@@ -11,17 +11,20 @@
     <div class="modal-dialog">
         <form action="/api/log" method="post" class="modal-content" id="loggerForm">
             <div class="modal-header">
-                <h5 class="modal-title bold">Create A New Account</h5>
+                <h5 class="modal-title bold">Add A Log</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                     <div class="container">
-                        <img src="{{ url_for('static', filename='images/objects/person-fill.svg') }}">
+                        <h4 class="bold">Day</h4>
+                        <input type="text" placeholder="mm-dd-yyyy" name="sleepTime" class="form_box" v-model="sleepTime"required><br>
+                        <p id="sleepMsg" style="color:red !important;" v-if="sleepError">invalid time (remember it's 24:00 format)</p><br>
+                        <h4 class="bold">Estimated Sleep Time</h4>
                         <input type="text" placeholder="hh:mm" name="sleepTime" class="form_box" v-model="sleepTime"required><br>
-                        <p id="sUserMsg" style="color:red !important;" v-if="sUserError">invalid time (remember it's 24:00 format)</p><br>
-                        <img src="{{ url_for('static', filename='images/objects/key-fill.svg') }}">
+                        <p id="sleepMsg" style="color:red !important;" v-if="sleepError">invalid time (remember it's 24:00 format)</p><br>
+                        <h4 class="bold">Estimated Wake Up Time</h4>
                         <input type="password" placeholder="hh:mm" name="wakeTime" class="form_box" v-model="wakeTime"required><br>
-                        <p id="sPassMsg" style="color:red !important;" v-if="sPassError">invalid time (remember it's 24:00 format)</p><br>
+                        <p id="wakeMsg" style="color:red !important;" v-if="wakeError">invalid time (remember it's 24:00 format)</p><br>
                     </div>
             </div>
             <div class="modal-footer">
@@ -44,8 +47,10 @@
         delimiters: ["[[", "]]"],
         data() {
             return {
-                sleep_time: "",
-                wake_time: "",
+                sleepError: false,
+                wakeError: false,
+                sleepTime: "",
+                wakeTime: "",
             };
         },
         methods: {
@@ -58,17 +63,17 @@
                 wake_time: this.wakeTime,
             },
             {headers:{'Content-Type': 'application/json'}}).then(function (response) {
-            refThis.sUserError = false;
-            refThis.sPassError = false;
+            refThis.sleepError = false;
+            refThis.wakeError = false;
             if (response.data.redirect) {
                 window.location.href = response.data.redirect;
             }
             else {
                 if (response.data.error == 1) {
-                    refThis.sUserError = true;
+                    refThis.sleepError = true;
                 }
                 else if (response.data.error == 2) {
-                    refThis.sPassError = true;
+                    refThis.wakeError = true;
                 }
             }
             });

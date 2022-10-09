@@ -90,6 +90,7 @@ def signup():
                 newUser = {
                     "username": username,
                     "password_hash": pbkdf2_sha256.hash(password),
+                    "log": pbkdf2_sha256.hash(password),
                 }
                 users.insert_one(newUser)
                 user = users.find_one({'username': username})
@@ -111,13 +112,14 @@ def logout(uid):
     session['logged_in_id'] = ''
     return redirect('/')
 
-@app.route('/api/calculate', methods=['POST'])
-def calculate():
-    return render_template('home.html')
-
 @app.route('/api/log', methods=['POST'])
-def updatelog():
-    return render_template('home.html')
+def log():
+    print(request.json)
+    print('data', request.data)
+    sleep_time=request.get_json()['sleep_time']
+    wake_time=request.get_json()['wake_time']
+    users = db.users
+
 
 if __name__ == "__main__":
     app.config['SECRET_KEY'] = '123qwi34iWge9era89F1393h3gwJ0q3'
