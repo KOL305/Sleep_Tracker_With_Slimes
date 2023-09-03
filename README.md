@@ -1,6 +1,6 @@
 # Cloud Nine
 Description:
-- Custom word cloud builder created for the 2022 AT&T Junior Labs Hackathon (2nd Place Winner)
+- Web-based sleep cycle tracker and sleep helper created for the TeenTechSF 2022 Hackathon (Finalist)
 
 Pre-requisites:
 - MongoDB Account
