@@ -1,5 +1,6 @@
 # Cloud Nine
-
+Description:
+- Custom word cloud builder created for the 2022 AT&T Junior Labs Hackathon (2nd Place Winner)
 
 Pre-requisites:
 - MongoDB Account
